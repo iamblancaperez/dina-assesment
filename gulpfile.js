@@ -6,12 +6,14 @@ const gutil = require('gulp-util');
 const uglify = require('gulp-uglify');
 const cssMinify = require('gulp-minify-css');
 const concat = require('gulp-concat');
+const server = require('gulp-express');
 
+// Tests
 gulp.task('tests', function() {
   return gulp.src(['test/test-*.js'], {read: false})
 	.pipe(mocha({reporter: 'nyan'}))
 });
- 
+
 gulp.task('styles', function(){
   var injectAppFiles = gulp.src(['src/assets/sass/_variables.scss', 
     'src/assets/sass/*.scss', 
@@ -36,7 +38,7 @@ gulp.task('styles', function(){
 });
 
 gulp.task('script', function(){
-  gulp.src(['src/lib/*.js', 'src/assets/js/*.js'])
+  gulp.src(['node_modules/jquery/dist/jquery.min.js', 'src/lib/*.js', 'src/assets/js/*.js'])
   .pipe(concat('script.min.js'))   
   .pipe(gulp.dest('dist/js/'));
 });
@@ -54,3 +56,10 @@ gulp.task('html', ['styles', 'script'],function(){
     .pipe(gulp.dest('dist'))
 });
 
+//Express task
+
+gulp.task('server', ['html'], function () {
+  server.run(['app.js']);
+  gulp.watch(['src/assets/js/*.js'], ['script']);
+  gulp.watch(['src/*.html'], server.notify);
+});
