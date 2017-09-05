@@ -1,6 +1,6 @@
 #users-container{
 	.user{
-		.user-name.locked{
+		&.locked{
 			text-decoration : line-through;
 		}
 	}
