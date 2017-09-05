@@ -10,6 +10,11 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname + '/dist/index.html'));
 })
 
+app.get('/new', function (req, res) {
+  res.sendFile(path.join(__dirname + '/dist/new.html'));
+})
+
+
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
 })
