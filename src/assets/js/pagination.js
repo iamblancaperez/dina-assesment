@@ -73,31 +73,15 @@ function Pagination(elements, container){
 			realThis.container.innerHTML += realThis.templateListItem(e);
 		});
 
+		var parent, status;
 		var statusButtons = document.getElementsByClassName("user-status");
-		
 		Array.from(statusButtons).forEach(function(button){
 			button.addEventListener("click", function(e){
 				e.preventDefault();
-				this.parentElement.classList.toggle("locked");
-				$.ajax({
-					url: `http://js-assessment-backend.herokuapp.com/users.json`,
-					type: 'POST',
-					dataType: 'json',
-					contentType: 'application/json',
-					data: JSON.stringify({
-					  "status": "active",
-					})
-				})
-				.done(function() {
-					console.log("success");
-				})
-				.fail(function() {
-					console.log("error");
-				})
-				.always(function() {
-					console.log("complete");
-				});
-				
+				parent = this.parentElement;
+				parent.classList.toggle("locked");
+				status = parent.classList.contains("locked") ? "locked" : "active";	
+				updateUser(parent.dataset.identifier, JSON.stringify({'status' : status}));				
 			})
 		});
 	};
