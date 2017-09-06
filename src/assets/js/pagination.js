@@ -99,5 +99,4 @@ function Pagination(elements, container){
 
 		return template;
 	};
-
 }

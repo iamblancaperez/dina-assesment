@@ -15,12 +15,13 @@ function getUsers(){
 }
 
 function updateUser(id, params){
+	console.log(params)
 	$.ajax({
 		url: `${url}/${id}.json`,
 		type: 'PUT',
 		dataType: 'json',
 		contentType: 'application/json',
-		data: params
+		data: JSON.stringify(params)
 	})
 	.done(function() {
 		console.log("success");
@@ -54,15 +55,15 @@ function createUser(params){
 	});
 } 
 
-/*function getUser(id){
-	$.ajax({
-		url: '/path/to/file',
-		type: 'default GET (Other values: POST)',
-		dataType: 'default: Intelligent Guess (Other values: xml, json, script, or html)',
-		data: {param1: 'value1'},
+function getUser(id = 363){
+	return $.ajax({
+		url: `${url}/${id}.json`,
+		type: 'GET',
+		dataType: 'json',
+		contentType: 'application/json'
 	})
-	.done(function() {
-		console.log("success");
+	.done(function(res) {
+		console.log(res);
 	})
 	.fail(function() {
 		console.log("error");
@@ -71,4 +72,4 @@ function createUser(params){
 		console.log("complete");
 	});
 	
-}*/
+}
