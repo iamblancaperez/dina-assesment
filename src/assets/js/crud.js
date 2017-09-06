@@ -1,17 +1,10 @@
 const url = "http://js-assessment-backend.herokuapp.com/users";
 
 function getUsers(){
-	$.ajax({
+	return $.ajax({
 		url: url,
 		type: 'GET'
 	})
-	.done(function(res) {
-		var users = new Pagination(res, "users-container");
-		users.setPagination();
-	})
-	.fail(function() {
-		console.log("error");
-	});
 }
 
 function updateUser(id, params){

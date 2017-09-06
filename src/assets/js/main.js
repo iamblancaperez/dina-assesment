@@ -13,7 +13,10 @@ $(document).ready(function($) {
 			});			
 			break;
 		default:
-			console.log('It works with default');
+			getUsers().then(function(usersJSON){
+				var users = new Pagination(usersJSON, 0);
+				users.setPagination(mainContainer);				
+			});
 			break;
 	}
 });

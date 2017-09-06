@@ -1,33 +1,43 @@
-function Pagination(elements, container){
-	var realThis = this;
+function Pagination(elements, currentPage){
+	const realThis = this;
 	this.elements = elements;
-	this.currentPage = 0;
-	this.maxPages = Math.ceil(this.elements.height / 10);
-	this.container = document.getElementById(container);
-	this.prevUsers = document.getElementById("prev-users");
-	this.nextUsers = document.getElementById("next-users");
-
-	this.setPagination = function (){
+	this.currentPage = currentPage;
+	this.maxPages = Math.ceil(this.elements.length / 10);
+	this.container = document.createElement("div");
+	this.navigator = document.createElement("div");
+	this.prevUsers = document.createElement("button");
+	this.nextUsers = document.createElement("button");
+	
+	this.setPagination = function (domElement){
 		var currentBegin, currentEnd;
-		if(this.container.dataset.page){
-			currentBegin = this.currentPage * 10;
-			currentEnd = (this.currentPage + 1) * 10;
-		}else{
-			currentBegin = 0;
-			currentEnd = 10;
-		}
+		currentBegin = this.currentPage * 10;
+		currentEnd = (this.currentPage + 1) * 10;
+
+		this.container.id = "users-container";
+		
+		this.prevUsers.setAttribute("id", "prev-users");
+		this.prevUsers.innerHTML = "Prev";
+
+		this.navigator.id = "users-navigator";
+		
+		this.nextUsers.setAttribute("id", "next-users");
+		this.nextUsers.innerHTML = "Next";
+		
+		domElement.append(this.container);
+		domElement.append(this.navigator);
+
+		this.checkBeginEnd();
+		this.fillContainer(this.elements.slice(currentBegin, currentEnd));
+
+		this.navigator.append(this.prevUsers);
+		this.navigator.append(this.nextUsers);
 
 		this.prevUsers.addEventListener("click", function(){
 			realThis.previousTen();
 		});
-
 		this.nextUsers.addEventListener("click", function(){
 			realThis.nextTen();
 		});
-
-		this.updateDataContainer(currentBegin, currentEnd);
-		this.checkBeginEnd();
-		this.fillContainer(this.elements.slice(currentBegin, currentEnd));
 	};
 
 	this.previousTen = function(){
@@ -37,7 +47,6 @@ function Pagination(elements, container){
 		currentEnd = (this.currentPage + 1) * 10;
 
 		this.container.innerHTML = "";
-		this.updateDataContainer(currentBegin, currentEnd);
 		this.checkBeginEnd();
 		this.fillContainer(this.elements.slice(currentBegin, currentEnd));
 	};
@@ -52,19 +61,14 @@ function Pagination(elements, container){
 		currentEnd = currentEnd > this.elements.length ? this.elements.length : currentEnd;
 
 		this.container.innerHTML = "";
-		this.updateDataContainer(currentBegin, currentEnd);
 		this.checkBeginEnd();
 		this.fillContainer(this.elements.slice(currentBegin, currentEnd));
 	};
 
-	this.updateDataContainer = function(begin, end){
-		this.container.dataset.begin = begin;
-		this.container.dataset.end = end;
-	};
-
 	this.checkBeginEnd = function(){
-		this.prevUsers.disabled = parseInt(this.container.dataset.begin) <= 0 ? true : false;
-		this.nextUsers.disabled = parseInt(this.container.dataset.end) >= elements.length ? true : false;
+		this.container.dataset.page = this.currentPage;
+		this.prevUsers.disabled = parseInt(this.currentPage) <= 0 ? true : false;
+		this.nextUsers.disabled = parseInt(this.currentPage) >= this.maxPages ? true : false;
 	};
 
 	
