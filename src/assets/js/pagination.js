@@ -2,12 +2,12 @@ function Pagination(elements, currentPage){
 	const realThis = this;
 	this.elements = elements;
 	this.currentPage = currentPage;
-	this.maxPages = Math.ceil(this.elements.length / 10);
+	this.maxPages = Math.ceil(this.elements.length / 10) - 1;
 	this.container = document.createElement("div");
 	this.navigator = document.createElement("div");
 	this.prevUsers = document.createElement("button");
 	this.nextUsers = document.createElement("button");
-	
+
 	this.setPagination = function (domElement){
 		var currentBegin, currentEnd;
 		currentBegin = this.currentPage * 10;
@@ -53,7 +53,7 @@ function Pagination(elements, currentPage){
 
 
 	this.nextTen = function(){
-		this.currentPage = this.currentPage + 1 > this.maxPages ? 0 : this.currentPage + 1;
+		this.currentPage = this.currentPage + 1 > this.maxPages ? this.maxPages : this.currentPage + 1;
 
 		currentBegin = this.currentPage * 10;
 		currentEnd = (this.currentPage + 1) * 10;
