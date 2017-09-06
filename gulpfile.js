@@ -62,4 +62,6 @@ gulp.task('server', ['html'], function () {
   server.run(['app.js']);
   gulp.watch(['src/assets/js/*.js'], ['script']);
   gulp.watch(['src/*.html'], server.notify);
+  gulp.watch(['src/assets/sass//*.scss'], ['styles']);
+  gulp.watch(['src/*.html'], server.notify);
 });
