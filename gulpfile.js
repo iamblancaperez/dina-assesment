@@ -51,7 +51,7 @@ gulp.task('html', ['styles', 'script'],function(){
     ignorePath: ['src', 'dist']
   };
 
-  return gulp.src('src/index.html')
+  return gulp.src(['src/index.html', 'src/new.html'])
   	.pipe(inject(injectFiles, injectOptions))
     .pipe(gulp.dest('dist'))
 });
