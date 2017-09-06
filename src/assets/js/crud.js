@@ -1,4 +1,5 @@
 const url = "http://js-assessment-backend.herokuapp.com/users";
+
 function getUsers(){
 	$.ajax({
 		url: url,
@@ -34,23 +35,26 @@ function updateUser(id, params){
 
 function createUser(params){
 	$.ajax({
-		url: '${url}',
+		url: `${url}.json`,
 		type: 'POST',
 		dataType: 'json',
 		contentType: 'application/json',
-		data: params
+		data: JSON.stringify(params)
 	})
-	.done(function() {
+	.done(function(res) {
+		console.log(res);
 		console.log("success");
 	})
-	.fail(function() {
+	.fail(function(error) {
+		console.log(error);
 		console.log("error");
 	})
 	.always(function() {
 		console.log("complete");
 	});
 } 
-function getUser(id){
+
+/*function getUser(id){
 	$.ajax({
 		url: '/path/to/file',
 		type: 'default GET (Other values: POST)',
@@ -67,4 +71,4 @@ function getUser(id){
 		console.log("complete");
 	});
 	
-}
+}*/
