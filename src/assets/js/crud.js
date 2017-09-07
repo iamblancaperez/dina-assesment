@@ -1,4 +1,4 @@
-var url = "http://js-assessment-backend.herokuapp.com/users";
+var url = "https://js-assessment-backend.herokuapp.com/users";
 
 function getUsers(){
 	return $.ajax({
