@@ -3,10 +3,11 @@ function Pagination(elements, currentPage){
 	this.elements = elements;
 	this.currentPage = currentPage;
 	this.maxPages = Math.ceil(this.elements.length / 10) - 1;
-	this.container = document.createElement("div");
-	this.navigator = document.createElement("div");
-	this.prevUsers = document.createElement("button");
-	this.nextUsers = document.createElement("button");
+	this.container = document.createElement("ul");
+	this.navigator = document.createElement("nav");
+	this.pagination = document.createElement("ul");
+	this.prevUsers = document.createElement("li");
+	this.nextUsers = document.createElement("li");
 
 	this.setPagination = function (domElement){
 		var currentBegin, currentEnd;
@@ -14,23 +15,30 @@ function Pagination(elements, currentPage){
 		currentEnd = (this.currentPage + 1) * 10;
 
 		this.container.id = "users-container";
-		
+
 		this.prevUsers.setAttribute("id", "prev-users");
-		this.prevUsers.innerHTML = "Prev";
+		this.prevUsers.innerHTML = `<a class="page-link" href="#">Previous</a>`;
 
 		this.navigator.id = "users-navigator";
 		
 		this.nextUsers.setAttribute("id", "next-users");
-		this.nextUsers.innerHTML = "Next";
+		this.nextUsers.innerHTML = `<a class="page-link" href="#">Next</a>`;
 		
 		domElement.append(this.container);
 		domElement.append(this.navigator);
+		this.navigator.append(this.pagination);
+
+		this.container.classList.add("list-group");
+		this.pagination.classList.add("pagination");
 
 		this.checkBeginEnd();
 		this.fillContainer(this.elements.slice(currentBegin, currentEnd));
 
-		this.navigator.append(this.prevUsers);
-		this.navigator.append(this.nextUsers);
+		this.pagination.append(this.prevUsers);
+		this.pagination.append(this.nextUsers);
+
+		this.prevUsers.classList.add("page-item");
+		this.nextUsers.classList.add("page-item");
 
 		this.prevUsers.addEventListener("click", function(){
 			realThis.previousTen();
@@ -67,8 +75,20 @@ function Pagination(elements, currentPage){
 
 	this.checkBeginEnd = function(){
 		this.container.dataset.page = this.currentPage;
-		this.prevUsers.disabled = parseInt(this.currentPage) <= 0 ? true : false;
-		this.nextUsers.disabled = parseInt(this.currentPage) >= this.maxPages ? true : false;
+		if(parseInt(this.currentPage) <= 0){
+			this.prevUsers.disabled = true;
+			this.prevUsers.classList.add("disabled");
+		}else{
+			this.prevUsers.disabled = false;
+			this.prevUsers.classList.remove("disabled");
+		}
+		if( parseInt(this.currentPage) >= this.maxPages){
+			this.nextUsers.disabled = true;
+			this.nextUsers.classList.add("disabled");
+		}else{
+			this.nextUsers.disabled = false;
+			this.nextUsers.classList.remove("disabled");
+		}
 	};
 
 	
@@ -93,13 +113,13 @@ function Pagination(elements, currentPage){
 	this.templateListItem = function (item){
 		var classActivate = "fa fa-unlock";
 		var classLock = "fa fa-lock";
-		var template = `<div class="user ${item.status == "locked" ? "locked" : ''}" data-identifier="${item.id}">
+		var template = `<li class="list-group-item user ${item.status == "locked" ? "locked" : ''}" data-identifier="${item.id}">
 											<span class="user-name">${item.last_name} ${item.first_name}</span>
 											<span class="user-created"> - Created at: ${item.created_at} - </span> 
 											<a href="#" class="user-status">
 												<i class="${item.status == "locked" ? classActivate : classLock}" aria-hidden="true"></i>
 											</a>
-										</div>`
+										</li>`
 
 		return template;
 	};

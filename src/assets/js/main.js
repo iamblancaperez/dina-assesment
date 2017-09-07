@@ -40,15 +40,18 @@ $(document).ready(function($) {
 	});
 
 	var menuLinks = Array.from(document.getElementsByClassName("nav-item"));
-
+	var allLinks = Array.from(document.getElementsByTagName("a"));
+	allLinks.forEach(function(element){
+		element.addEventListener('click', function(e){
+			e.preventDefault();
+		});
+	});
 	menuLinks.forEach(function(element){
 		element.addEventListener('click', function(e){
 			menuLinks.forEach(function(links){
 				links.classList.remove("active");
-			});
-			e.preventDefault();
+			});			
 			this.classList.add("active");
-			//Router.check(this.querySelector("a").getAttribute("href")).listen();
 			Router.navigate(this.querySelector("a").getAttribute("href"));			
 		});
 	});
