@@ -1,14 +1,13 @@
-const url = "http://js-assessment-backend.herokuapp.com/users";
+var url = "http://js-assessment-backend.herokuapp.com/users";
 
 function getUsers(){
 	return $.ajax({
-		url: url,
+		url: `${url}`,
 		type: 'GET'
 	})
 }
 
 function updateUser(id, params){
-	console.log(params)
 	$.ajax({
 		url: `${url}/${id}.json`,
 		type: 'PUT',
