@@ -15,7 +15,18 @@ $(document).ready(function($) {
 		var user = new User();
 		user.renderForm(mainContainer);
 	})
+	.add(/overview/, function() {
+		mainContainer.innerHTML = "";
+	})
+	.add(/sites/, function() {
+		mainContainer.innerHTML = "";
+	})
+	.add(/payments/, function() {
+		mainContainer.innerHTML = "";
+	})
 	.add(function() {
+		console.log('sadjkfbskajdfjksbdksdjf')
+		mainContainer.innerHTML = "";
 		getUsers().then(function(usersJSON){
 			var users = new Pagination(usersJSON, 0);
 			users.setPagination(mainContainer);				
@@ -26,6 +37,20 @@ $(document).ready(function($) {
 	createUser.addEventListener('click',function(e){
 		e.preventDefault();
 		Router.check('/new').listen();
+	});
+
+	var menuLinks = Array.from(document.getElementsByClassName("nav-item"));
+
+	menuLinks.forEach(function(element){
+		element.addEventListener('click', function(e){
+			menuLinks.forEach(function(links){
+				links.classList.remove("active");
+			});
+			e.preventDefault();
+			this.classList.add("active");
+			//Router.check(this.querySelector("a").getAttribute("href")).listen();
+			Router.navigate(this.querySelector("a").getAttribute("href"));			
+		});
 	});
 
 });
