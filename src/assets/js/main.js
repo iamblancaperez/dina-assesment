@@ -6,13 +6,13 @@ $(document).ready(function($) {
 	// adding routes
 	Router
 	.add(/(.*)\/edit/, function() {
-		getUser().then(function(userJSON){
-			var user = new User(userJSON.first_name, userJSON.last_name, userJSON.status);
+		getUser(arguments[0]).then(function(userJSON){
+			var user = new User(userJSON.id, userJSON.first_name, userJSON.last_name, userJSON.status);
 			user.renderForm(mainContainer, "edit");
 		});
 	})
 	.add(/new/, function() {
-		var user = new User();
+		var user = new User("");
 		user.renderForm(mainContainer);
 	})
 	.add(/overview/, function() {
@@ -25,7 +25,6 @@ $(document).ready(function($) {
 		mainContainer.innerHTML = "";
 	})
 	.add(function() {
-		console.log('sadjkfbskajdfjksbdksdjf')
 		mainContainer.innerHTML = "";
 		getUsers().then(function(usersJSON){
 			var users = new Pagination(usersJSON, 0);

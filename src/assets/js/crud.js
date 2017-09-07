@@ -27,27 +27,17 @@ function updateUser(id, params){
 }
 
 function createUser(params){
-	$.ajax({
+	return $.ajax({
 		url: `${url}.json`,
 		type: 'POST',
 		dataType: 'json',
 		contentType: 'application/json',
 		data: JSON.stringify(params)
 	})
-	.done(function(res) {
-		console.log(res);
-		console.log("success");
-	})
-	.fail(function(error) {
-		console.log(error);
-		console.log("error");
-	})
-	.always(function() {
-		console.log("complete");
-	});
 } 
 
-function getUser(id = 363){
+function getUser(id){
+	console.log(id);
 	return $.ajax({
 		url: `${url}/${id}.json`,
 		type: 'GET',

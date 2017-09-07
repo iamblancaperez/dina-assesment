@@ -80,4 +80,4 @@ var Router = {
 				}
 				return this;
 		}
-}
+}	

@@ -90,7 +90,6 @@ function Pagination(elements, currentPage){
 			this.nextUsers.classList.remove("disabled");
 		}
 	};
-
 	
 	this.fillContainer = function(elements){
 		elements.forEach(function(e){
